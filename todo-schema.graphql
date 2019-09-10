@@ -1,0 +1,32 @@
+type User @model @auth(rules: [{ allow: owner, ownerField: "id", operations: [create, update, delete] }])
+{
+  id: ID!
+  username: String!
+  lists: [List] @connection
+  createdAt: String
+  updatedAt: String
+}
+
+type List @model @auth(rules: [{allow: owner, operations: [create, update, delete]}])
+@key(name: "owner", fields: ["owner", "createdAt"], queryField: "listUserLists")
+{
+    id: ID!
+    owner: ID! 
+    title: String!
+    colorHex: String!
+    items: [Item]! @connection
+    createdAt: String
+    updatedAt: String
+}
+
+type Item @model @auth(rules: [{allow: owner, operations: [create, update, delete]}])
+@key(name: "list", fields: ["list", "createdAt"], queryField: "listListsItems")
+{
+  id: ID!
+  list: ID!
+  title: String!
+  done: Boolean!
+  colorHex: String!
+  createdAt: String
+  updatedAt: String
+}
