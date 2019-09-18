@@ -1,32 +1,34 @@
-type User @model @auth(rules: [{ allow: owner, ownerField: "id", operations: [create, update, delete] }])
+type User @model @auth(rules: [{ allow: owner, ownerField: "id", operations: [create, update, delete]}])
 {
   id: ID!
   username: String!
-  lists: [List] @connection
+  lists: [List] @connection(name: "UserList", keyField: "authorId")
   createdAt: String
   updatedAt: String
 }
-
-type List @model @auth(rules: [{allow: owner, operations: [create, update, delete]}])
-@key(name: "owner", fields: ["owner", "createdAt"], queryField: "listUserLists")
+  
+type List @model @auth(rules: [{allow: owner, ownerField: "authorId", operations: [create, update, delete]}])
+@key(name: "byAuthor", fields: ["authorId", "createdAt"], queryField: "getUserLists")
 {
     id: ID!
-    owner: ID! 
+    authorId: ID
+    author: User! @connection(name: "UserList", keyField: "authorId")
     title: String!
     colorHex: String!
-    items: [Item]! @connection
+    items: [Item] @connection(name: "ListItems", keyField: "listId") 
     createdAt: String
     updatedAt: String
 }
 
 type Item @model @auth(rules: [{allow: owner, operations: [create, update, delete]}])
-@key(name: "list", fields: ["list", "createdAt"], queryField: "listListsItems")
+@key(name: "byList", fields: ["listId", "createdAt"], queryField: "getListsItems")
 {
   id: ID!
-  list: ID!
+  listId: ID!
+  list: List @connection(name: "ListItems", keyField: "listId") 
   title: String!
+  search_title: String!
   done: Boolean!
-  colorHex: String!
   createdAt: String
   updatedAt: String
 }
