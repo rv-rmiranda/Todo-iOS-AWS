@@ -10,14 +10,14 @@ type User @model @auth(rules: [{ allow: owner, ownerField: "id", operations: [cr
 type List @model @auth(rules: [{allow: owner, ownerField: "authorId", operations: [create, update, delete]}])
 @key(name: "byAuthor", fields: ["authorId", "createdAt"], queryField: "getUserLists")
 {
-    id: ID!
-    authorId: ID
-    author: User! @connection(name: "UserList", keyField: "authorId")
-    title: String!
-    colorHex: String!
-    items: [Item] @connection(name: "ListItems", keyField: "listId") 
-    createdAt: String
-    updatedAt: String
+  id: ID!
+  authorId: ID
+  author: User! @connection(name: "UserList", keyField: "authorId")
+  title: String!
+  colorHex: String!
+  items: [Item] @connection(name: "ListItems", keyField: "listId") 
+  createdAt: String
+  updatedAt: String
 }
 
 type Item @model @auth(rules: [{allow: owner, operations: [create, update, delete]}])
