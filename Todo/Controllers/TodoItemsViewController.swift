@@ -7,7 +7,7 @@ import ChameleonFramework
 import AWSAppSync
 import AWSMobileClient
 
-class TodoListViewController: SwipeTableViewController {
+class TodoItemsViewController: SwipeTableViewController {
 
     weak var List: Todo?
     var refresing: Bool = false
@@ -123,7 +123,7 @@ class TodoListViewController: SwipeTableViewController {
 }
 
 //MARK: - Search Bar Method
-extension TodoListViewController: UISearchBarDelegate {
+extension TodoItemsViewController: UISearchBarDelegate {
     
     func withRequest(searchBar: UISearchBar) {
         searchItems(listID: List!.id!, text: searchBar.text!.lowercased(), appSyncClient: appSyncClient!)
@@ -144,7 +144,7 @@ extension TodoListViewController: UISearchBarDelegate {
     }
 }
 
-extension TodoListViewController {
+extension TodoItemsViewController {
     
     fileprivate func cleanCache(appSyncClient: AWSAppSyncClient) {
         do {
@@ -382,7 +382,7 @@ extension TodoListViewController {
 }
 
 
-extension TodoListViewController: DeleteItemDelegate {
+extension TodoItemsViewController: DeleteItemDelegate {
     func didDelete(index: Int) {
         deleteItem(index: index, appSyncClient: self.appSyncClient!)
     }

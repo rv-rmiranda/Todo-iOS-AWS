@@ -7,7 +7,7 @@ import ChameleonFramework
 import AWSAppSync
 import AWSMobileClient
 
-class CategoryTableViewController: SwipeTableViewController {
+class TableTodoListsViewController: SwipeTableViewController {
     
     fileprivate var categories = [Todo]()
     fileprivate var userName: String?
@@ -50,7 +50,7 @@ class CategoryTableViewController: SwipeTableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        let destinationVC = segue.destination as! TodoListViewController
+        let destinationVC = segue.destination as! TodoItemsViewController
         if let indexPath  = tableView.indexPathForSelectedRow {
             destinationVC.List = categories[indexPath.row]
         }
@@ -89,7 +89,7 @@ class CategoryTableViewController: SwipeTableViewController {
     }
 }
 
-extension CategoryTableViewController: SwipeCategoryDelegate {
+extension TableTodoListsViewController: SwipeCategoryDelegate {
     func didDelete(index: Int) {
         deleteTodo(index: index, appSyncClient: self.appSyncClient!)
     }
@@ -99,7 +99,7 @@ extension CategoryTableViewController: SwipeCategoryDelegate {
     }
 }
 
-extension CategoryTableViewController {
+extension TableTodoListsViewController {
     
     fileprivate func setUserName() {
         if let username = AWSMobileClient.sharedInstance().username {

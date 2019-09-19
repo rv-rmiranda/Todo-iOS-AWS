@@ -11,23 +11,31 @@
 		367EC6602183546C00FFB9E9 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 367EC65F2183546C00FFB9E9 /* Item.swift */; };
 		367EC6622183548100FFB9E9 /* Todos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 367EC6612183548100FFB9E9 /* Todos.swift */; };
 		36B23B2F23187ED7008BF99D /* AWSCognitoUserPoolsAuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B23B2E23187ED7008BF99D /* AWSCognitoUserPoolsAuthProvider.swift */; };
-		E2C502D82180E44D00A717F8 /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C502D72180E44D00A717F8 /* CategoryTableViewController.swift */; };
+		758E7A6F9F4CAEAA0089A0A4 /* Pods_Todo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C67F5F58E188EECDF0433A2 /* Pods_Todo.framework */; };
+		E21C145B2332FD0A00A3EB62 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21C14592332FD0A00A3EB62 /* API.swift */; };
+		E21C145C2332FD0A00A3EB62 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = E21C145A2332FD0A00A3EB62 /* awsconfiguration.json */; };
+		E2C502D82180E44D00A717F8 /* TableTodoListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C502D72180E44D00A717F8 /* TableTodoListsViewController.swift */; };
 		E2F62CD32177BE6700DB7BEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F62CD22177BE6700DB7BEE /* AppDelegate.swift */; };
-		E2F62CD52177BE6700DB7BEE /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F62CD42177BE6700DB7BEE /* TodoListViewController.swift */; };
+		E2F62CD52177BE6700DB7BEE /* TodoItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F62CD42177BE6700DB7BEE /* TodoItemsViewController.swift */; };
 		E2F62CD82177BE6700DB7BEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2F62CD62177BE6700DB7BEE /* Main.storyboard */; };
 		E2F62CDA2177BE6900DB7BEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2F62CD92177BE6900DB7BEE /* Assets.xcassets */; };
 		E2F62CDD2177BE6900DB7BEE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2F62CDB2177BE6900DB7BEE /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1C67F5F58E188EECDF0433A2 /* Pods_Todo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Todo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		212532865AFE3DDA1C584643 /* Pods-Todo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todo.debug.xcconfig"; path = "Target Support Files/Pods-Todo/Pods-Todo.debug.xcconfig"; sourceTree = "<group>"; };
 		364510C12183B0D500EBFE59 /* SwipeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTableViewController.swift; sourceTree = "<group>"; };
 		367EC65F2183546C00FFB9E9 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		367EC6612183548100FFB9E9 /* Todos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todos.swift; sourceTree = "<group>"; };
 		36B23B2E23187ED7008BF99D /* AWSCognitoUserPoolsAuthProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSCognitoUserPoolsAuthProvider.swift; sourceTree = "<group>"; };
-		E2C502D72180E44D00A717F8 /* CategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
+		8510E5A63A6F19D606CFFD4D /* Pods-Todo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todo.release.xcconfig"; path = "Target Support Files/Pods-Todo/Pods-Todo.release.xcconfig"; sourceTree = "<group>"; };
+		E21C14592332FD0A00A3EB62 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		E21C145A2332FD0A00A3EB62 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
+		E2C502D72180E44D00A717F8 /* TableTodoListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTodoListsViewController.swift; sourceTree = "<group>"; };
 		E2F62CCF2177BE6700DB7BEE /* Todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2F62CD22177BE6700DB7BEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E2F62CD42177BE6700DB7BEE /* TodoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListViewController.swift; sourceTree = "<group>"; };
+		E2F62CD42177BE6700DB7BEE /* TodoItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemsViewController.swift; sourceTree = "<group>"; };
 		E2F62CD72177BE6700DB7BEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E2F62CD92177BE6900DB7BEE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2F62CDC2177BE6900DB7BEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -39,18 +47,38 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				758E7A6F9F4CAEAA0089A0A4 /* Pods_Todo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		308AD622781C40E7117D4A51 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1C67F5F58E188EECDF0433A2 /* Pods_Todo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		36B23B2D23177033008BF99D /* AWS */ = {
 			isa = PBXGroup;
 			children = (
+				E21C14592332FD0A00A3EB62 /* API.swift */,
+				E21C145A2332FD0A00A3EB62 /* awsconfiguration.json */,
 				36B23B2E23187ED7008BF99D /* AWSCognitoUserPoolsAuthProvider.swift */,
 			);
 			path = AWS;
+			sourceTree = "<group>";
+		};
+		3E2789DC125078085CA6B70B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				212532865AFE3DDA1C584643 /* Pods-Todo.debug.xcconfig */,
+				8510E5A63A6F19D606CFFD4D /* Pods-Todo.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		E26944E0217A69C70078DC34 /* Data Models */ = {
@@ -65,8 +93,8 @@
 		E26944E1217A69E40078DC34 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				E2C502D72180E44D00A717F8 /* CategoryTableViewController.swift */,
-				E2F62CD42177BE6700DB7BEE /* TodoListViewController.swift */,
+				E2C502D72180E44D00A717F8 /* TableTodoListsViewController.swift */,
+				E2F62CD42177BE6700DB7BEE /* TodoItemsViewController.swift */,
 				364510C12183B0D500EBFE59 /* SwipeTableViewController.swift */,
 			);
 			path = Controllers;
@@ -95,6 +123,8 @@
 			children = (
 				E2F62CD12177BE6700DB7BEE /* Todo */,
 				E2F62CD02177BE6700DB7BEE /* Products */,
+				3E2789DC125078085CA6B70B /* Pods */,
+				308AD622781C40E7117D4A51 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -180,6 +210,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E21C145C2332FD0A00A3EB62 /* awsconfiguration.json in Resources */,
 				E2F62CDD2177BE6900DB7BEE /* LaunchScreen.storyboard in Resources */,
 				E2F62CDA2177BE6900DB7BEE /* Assets.xcassets in Resources */,
 				E2F62CD82177BE6700DB7BEE /* Main.storyboard in Resources */,
@@ -237,10 +268,11 @@
 			files = (
 				367EC6602183546C00FFB9E9 /* Item.swift in Sources */,
 				36B23B2F23187ED7008BF99D /* AWSCognitoUserPoolsAuthProvider.swift in Sources */,
-				E2F62CD52177BE6700DB7BEE /* TodoListViewController.swift in Sources */,
+				E2F62CD52177BE6700DB7BEE /* TodoItemsViewController.swift in Sources */,
 				E2F62CD32177BE6700DB7BEE /* AppDelegate.swift in Sources */,
-				E2C502D82180E44D00A717F8 /* CategoryTableViewController.swift in Sources */,
+				E2C502D82180E44D00A717F8 /* TableTodoListsViewController.swift in Sources */,
 				364510C22183B0D500EBFE59 /* SwipeTableViewController.swift in Sources */,
+				E21C145B2332FD0A00A3EB62 /* API.swift in Sources */,
 				367EC6622183548100FFB9E9 /* Todos.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -385,6 +417,7 @@
 		};
 		E2F62CE22177BE6900DB7BEE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 212532865AFE3DDA1C584643 /* Pods-Todo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -407,6 +440,7 @@
 		};
 		E2F62CE32177BE6900DB7BEE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8510E5A63A6F19D606CFFD4D /* Pods-Todo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
