@@ -17,9 +17,9 @@ class TableTodoListsViewController: SwipeTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appSyncClient = appDelegate.appSyncClient
-        tableView.tag = 0
+        let appDelegate  = UIApplication.shared.delegate as! AppDelegate
+        appSyncClient    = appDelegate.appSyncClient
+        tableView.tag    = 0
         CategoryDelegate = self
         setAuth()
     }
@@ -90,6 +90,7 @@ class TableTodoListsViewController: SwipeTableViewController {
 }
 
 extension TableTodoListsViewController: SwipeCategoryDelegate {
+    
     func didDelete(index: Int) {
         deleteTodo(index: index, appSyncClient: self.appSyncClient!)
     }
@@ -99,6 +100,7 @@ extension TableTodoListsViewController: SwipeCategoryDelegate {
     }
 }
 
+//MARK: - AppSync Integration with API.swift
 extension TableTodoListsViewController {
     
     fileprivate func setUserName() {

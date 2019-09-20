@@ -8,15 +8,21 @@ import AWSAppSync
 import AWSMobileClient
 
 class TodoItemsViewController: SwipeTableViewController {
-
+    
     weak var List: Todo?
-    var refresing: Bool = false
+    fileprivate var refresing: Bool = false
     fileprivate var nextItem: String = ""
     @IBOutlet weak var searchBar: UISearchBar!
     
+
     //MARK: - AWS AppSync Variables:
     fileprivate weak var appSyncClient: AWSAppSyncClient?
+    var discardUpdate : Cancellable?
+    var discardNew    : Cancellable?
+    var discardDelete : Cancellable?
     
+    
+    //MARK: - Table View Methods:
     override func viewDidLoad() {
         super.viewDidLoad()
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -25,22 +31,18 @@ class TodoItemsViewController: SwipeTableViewController {
         tableView.tag   = 1
         setRefresher()
         if let id = List?.id {
+            SVProgressHUD.show()
             getListItems(id: id, token: nextItem)
+            setSubscriptionUpdate()
         }
     }
     
-    fileprivate func setRefresher() {
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+    fileprivate func setSubscriptionUpdate() {
+        subscriptionUpdate(appSyncClient: appSyncClient!)
+        subscriptionNew(appSyncClient: appSyncClient!)
+        subscriptionDelete(appSyncClient: appSyncClient!)
     }
     
-    @objc func refresh(sender:AnyObject) {
-        refresing = true
-        if let id = List?.id {
-            getListItems(id: id, token: nextItem)
-        }
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         title = List?.title ?? "Items"
@@ -49,7 +51,7 @@ class TodoItemsViewController: SwipeTableViewController {
     }
     
     func updateNaveBar(withHecColor colorHexCode: String){
-        guard let navBar   = navigationController?.navigationBar else {fatalError("Navigation controller does not exist.")}
+        guard let navBar = navigationController?.navigationBar else {fatalError("Navigation controller does not exist.")}
         if let navBarColor = UIColor(hexString: colorHexCode) {
             navBar.barTintColor    = navBarColor
             navBar.tintColor       = ContrastColorOf(navBarColor, returnFlat: true)
@@ -73,7 +75,6 @@ class TodoItemsViewController: SwipeTableViewController {
         if let item = List?.items?[indexPath.row] {
             cell.textLabel?.text = item.title
             cell.accessoryType   = item.done! ? .checkmark : .none
-//            cell.backgroundColor = UIColor(hexString: item.colorHex ?? "#F0F8FF")
             let scalar: CGFloat = CGFloat(indexPath.row)/CGFloat(List!.items!.count)
             if let colour = UIColor(hexString: List?.colorHex ?? "#F0F8FF")?.darken(byPercentage:scalar) {
                 cell.backgroundColor      = colour
@@ -122,19 +123,36 @@ class TodoItemsViewController: SwipeTableViewController {
     }
 }
 
+//MARK: - Table Refresher
+extension TodoItemsViewController {
+    
+    fileprivate func setRefresher() {
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl?.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+    }
+    
+    @objc func refresh(sender:AnyObject) {
+        refresing = true
+        if let id = List?.id {
+            getListItems(id: id, token: nextItem)
+        }
+    }
+}
+
 //MARK: - Search Bar Method
 extension TodoItemsViewController: UISearchBarDelegate {
     
-    func withRequest(searchBar: UISearchBar) {
+    fileprivate func withRequest(searchBar: UISearchBar) {
         searchItems(listID: List!.id!, text: searchBar.text!.lowercased(), appSyncClient: appSyncClient!)
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    internal func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         withRequest(searchBar: searchBar)
         searchBar.resignFirstResponder()
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    internal func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
             searchItems(listID: List!.id!, text: searchBar.text!, appSyncClient: appSyncClient!)
         }
@@ -144,6 +162,7 @@ extension TodoItemsViewController: UISearchBarDelegate {
     }
 }
 
+//MARK: - AppSync Integration with API.swift
 extension TodoItemsViewController {
     
     fileprivate func cleanCache(appSyncClient: AWSAppSyncClient) {
@@ -156,8 +175,6 @@ extension TodoItemsViewController {
     
     fileprivate func getListItems(id: String, token: String) {
         
-        SVProgressHUD.show()
-        
         var cache = CachePolicy.returnCacheDataAndFetch
         var queryInput: ListListsItemsQuery?
         
@@ -166,7 +183,6 @@ extension TodoItemsViewController {
         }
         else {
             queryInput = ListListsItemsQuery(list: id, limit: 20)
-            self.List?.items = [Items]()
         }
         
         if refresing {
@@ -322,7 +338,6 @@ extension TodoItemsViewController {
             if text != "" {
                 self.List!.items![index].title = text
                 let mutationInput = UpdateItemInput(id: item.id!, title: text, searchTitle: textFiel.text!.lowercased())
-//                SVProgressHUD.show()
                 self.updateItem(mutationInput: mutationInput, appSyncClient: appSyncClient)
                 self.tableView.reloadData()
             }
@@ -347,7 +362,7 @@ extension TodoItemsViewController {
             queryInput = ListListsItemsQuery(list: listID, filter: FilterInput, limit: 20)
         }
         else {
-             queryInput = ListListsItemsQuery(list: listID, limit: 20)
+            queryInput = ListListsItemsQuery(list: listID, limit: 20)
         }
         
         appSyncClient.fetch(query: queryInput!, cachePolicy: .returnCacheDataElseFetch) {(result, error) in
@@ -363,12 +378,12 @@ extension TodoItemsViewController {
                 result?.data?.listListsItems?.items!.forEach {
                     search_items.append(
                         Items(
-                            id:           $0!.id,
-                            title:        $0!.title,
-                            search_title: $0!.searchTitle,
-                            done:         $0!.done,
-                            createdAt:    $0?.createdAt ?? "",
-                            colorHex:     $0!.colorHex
+                            id           : $0!.id,
+                            title        : $0!.title,
+                            search_title : $0!.searchTitle,
+                            done         : $0!.done,
+                            createdAt    : $0?.createdAt ?? "",
+                            colorHex     : $0!.colorHex
                         )
                     )
                 }
@@ -379,15 +394,69 @@ extension TodoItemsViewController {
         List!.items! = search_items
         tableView.reloadData()
     }
+    
+    fileprivate func subscriptionUpdate(appSyncClient: AWSAppSyncClient) {
+        do {
+            discardUpdate = try appSyncClient.subscribe(subscription: OnUpdateItemSubscription(), resultHandler: { (result, transaction, error) in
+                if let result = result {
+                    print(result.data!.onUpdateItem!.title + " " + result.data!.onUpdateItem!.updatedAt!)
+                    self.getListItems(id: self.List!.id!, token: self.nextItem)
+                } else if let error = error {
+                    print(error.localizedDescription)
+                }
+            })
+        } catch {
+            print("Error starting subscription.")
+        }
+    }
+    
+    fileprivate func subscriptionNew(appSyncClient: AWSAppSyncClient) {
+        do {
+            discardNew = try appSyncClient.subscribe(subscription: OnCreateItemSubscription(), resultHandler: { (result, transaction, error) in
+                if let result = result {
+                    self.List?.items?.append(Items(
+                        id           : result.data!.onCreateItem!.id,
+                        title        : result.data!.onCreateItem!.title,
+                        search_title : result.data!.onCreateItem!.searchTitle,
+                        done         : result.data!.onCreateItem!.done,
+                        createdAt    : result.data!.onCreateItem!.createdAt!,
+                        colorHex     : result.data!.onCreateItem!.colorHex
+                    ))
+                    self.tableView.reloadData()
+            
+                } else if let error = error {
+                    print(error.localizedDescription)
+                }
+            })
+        } catch {
+            print("Error starting subscription.")
+        }
+    }
+    
+    fileprivate func subscriptionDelete(appSyncClient: AWSAppSyncClient) {
+        do {
+            discardDelete = try appSyncClient.subscribe(subscription: OnDeleteItemSubscription(), resultHandler: { (result, transaction, error) in
+                if let result = result {
+                    print(result.data!.onDeleteItem!.title + " " + result.data!.onDeleteItem!.updatedAt!)
+                    self.getListItems(id: self.List!.id!, token: self.nextItem)
+                } else if let error = error {
+                    print(error.localizedDescription)
+                }
+            })
+        } catch {
+            print("Error starting subscription.")
+        }
+    }
 }
 
-
+//MARK: - Protocols
 extension TodoItemsViewController: DeleteItemDelegate {
-    func didDelete(index: Int) {
+    
+    internal func didDelete(index: Int) {
         deleteItem(index: index, appSyncClient: self.appSyncClient!)
     }
     
-    func didUpdate(index: Int) {
+    internal func didUpdate(index: Int) {
         updateItemTitle(index: index, appSyncClient: self.appSyncClient!)
     }
 }
