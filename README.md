@@ -250,6 +250,4 @@ This may take a couple of minutes. Once the execution finished, we can go into t
 AWS will charge you for the resources amplify has created in your account. To remove the resources amplify has created, execute the following command:
 ```$ amplify delete```
     
-    Hopefully, this helped you create and understand the basics of how to create an API using AWS resources. Soon I will be publishing “AWS [Amplify, Appsync, GraphQL] — Building an API for iOS {Part II}”. Please, leave you comments below and follow me for future posts.
-
-[“AWS [Amplify, Appsync, GraphQL] — Integrating an API in iOS {Part II}](http://www.dropwizard.io/1.0.2/docs/)
+Hopefully, this helped you create and understand the basics of how to create an API using AWS resources. Soon I will be publishing “[“AWS [Amplify, Appsync, GraphQL] — Integrating an API in iOS {Part II}](http://www.dropwizard.io/1.0.2/docs/)”. Please, leave you comments below and follow me for future posts.
