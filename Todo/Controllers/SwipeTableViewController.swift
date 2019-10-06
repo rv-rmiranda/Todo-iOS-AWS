@@ -22,16 +22,16 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
         tableView.separatorStyle = .none
         tableView.rowHeight      = 80.0
     }
-            
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! SwipeTableViewCell
         cell.delegate = self
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
-
+        
         var detectedAction: SwipeAction
         if orientation == .left {
             detectedAction = SwipeAction(style: .default , title: "Edit") { action, indexPath in
@@ -47,6 +47,7 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
             
             // customize the action appearance
             detectedAction.image = UIImage(named: "more")
+            detectedAction.backgroundColor = .clear
             
         } else {
             detectedAction = SwipeAction(style: .default, title: "Delete") { action, indexPath in
@@ -62,6 +63,7 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
             
             // customize the action appearance
             detectedAction.image = UIImage(named: "delete")
+            detectedAction.backgroundColor = .clear
         }
         
         return [detectedAction]
@@ -72,9 +74,11 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
         if orientation == .right {
             options.expansionStyle  = .destructive
             options.transitionStyle = .border
+            options.backgroundColor = .red
         } else {
             options.expansionStyle  = .selection
             options.transitionStyle = .drag
+            options.backgroundColor = .flatBlue
         }
         return options
     }

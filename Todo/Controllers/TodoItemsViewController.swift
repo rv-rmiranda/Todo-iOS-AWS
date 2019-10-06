@@ -414,16 +414,8 @@ extension TodoItemsViewController {
         do {
             discardNew = try appSyncClient.subscribe(subscription: OnCreateItemSubscription(), resultHandler: { (result, transaction, error) in
                 if let result = result {
-                    self.List?.items?.append(Items(
-                        id           : result.data!.onCreateItem!.id,
-                        title        : result.data!.onCreateItem!.title,
-                        search_title : result.data!.onCreateItem!.searchTitle,
-                        done         : result.data!.onCreateItem!.done,
-                        createdAt    : result.data!.onCreateItem!.createdAt!,
-                        colorHex     : result.data!.onCreateItem!.colorHex
-                    ))
-                    self.tableView.reloadData()
-            
+                    print(result.data!.onCreateItem!.title + " " + result.data!.onCreateItem!.updatedAt!)
+                    self.getListItems(id: self.List!.id!, token: self.nextItem)
                 } else if let error = error {
                     print(error.localizedDescription)
                 }
