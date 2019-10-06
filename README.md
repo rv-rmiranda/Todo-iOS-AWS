@@ -29,39 +29,40 @@ Before you get started, make sure you have the following:
 The GraphQL Transform provides a simple to use abstraction that helps you quickly create backends for your web and mobile applications on AWS. With the GraphQL Transform, you define your application’s data model using the GraphQL Schema Definition Language (SDL).
 
 For example, we can create the Backend of our Todo app with the following schema:
-        ```
-        type User @model @auth(rules: [{ allow: owner, ownerField: "id", operations: [create, update, delete]}])
-        {
-        id: ID!
-        username: String!
-        lists: [List] @connection(name: "UserList", keyField: "authorId")
-        createdAt: String
-        updatedAt: String
-        }
-        type List @model @auth(rules: [{allow: owner, ownerField: "authorId", operations: [create, update, delete]}])@key(name: "byAuthor", fields: ["authorId", "createdAt"], queryField: "getUserLists")
-        {
-        id: ID!
-        authorId: ID
-        author: User! @connection(name: "UserList", keyField: "authorId")
-        title: String!
-        colorHex: String!
-        items: [Item] @connection(name: "ListItems", keyField: "listId")
-        createdAt: String
-        updatedAt: String
-        }
-        type Item @model @auth(rules: [{allow: owner, operations: [create, update, delete]}])
-        @key(name: "byList", fields: ["listId", "createdAt"], queryField: "getListsItems")
-        {
-        id: ID!
-        listId: ID!
-        list: List @connection(name: "ListItems", keyField: "listId")
-        title: String!
-        search_title: String!
-        done: Boolean!
-        createdAt: String
-        updatedAt: String
-        }
-        ```
+``` 
+type User @model @auth(rules: [{ allow: owner, ownerField: "id", operations: [create, update, delete]}])
+{
+    id: ID!
+    username: String!
+    lists: [List] @connection(name: "UserList", keyField: "authorId")
+    createdAt: String
+    updatedAt: String
+}
+
+type List @model @auth(rules: [{allow: owner, ownerField: "authorId", operations: [create, update, delete]}])@key(name: "byAuthor", fields: ["authorId", "createdAt"], queryField: "getUserLists")
+{
+    id: ID!
+    authorId: ID
+    author: User! @connection(name: "UserList", keyField: "authorId")
+    title: String!
+    colorHex: String!
+    items: [Item] @connection(name: "ListItems", keyField: "listId")
+    createdAt: String
+    updatedAt: String
+}
+type Item @model @auth(rules: [{allow: owner, operations: [create, update, delete]}])
+@key(name: "byList", fields: ["listId", "createdAt"], queryField: "getListsItems")
+{
+    id: ID!
+    listId: ID!
+    list: List @connection(name: "ListItems", keyField: "listId")
+    title: String!
+    search_title: String!
+    done: Boolean!
+    createdAt: String
+    updatedAt: String
+}
+```
     
 In the above schema, we can see some annotations with ‘@’; these are called Directives. Here are some common annotations that are also used in the example:
         - @model — Objects annotated with @model are stored in Amazon DynamoDB and will deploy DynamoDB tables, resolvers, and additional GraphQL schemas.
