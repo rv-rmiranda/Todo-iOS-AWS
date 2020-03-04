@@ -20,6 +20,7 @@ jobs:
       run: pod install
       
     - name: Build
-      run: swift build -v
-    - name: Run tests
-      run: swift test -v
+      run: xcodebuild -scheme Todo -destination generic/platform=iOS -configuration Release | xcpretty -s
+      
+#     - name: Run tests
+#       run: swift test -v
